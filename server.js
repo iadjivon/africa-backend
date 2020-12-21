@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 
 const PORT = process.env.PORT || 3000;
 
@@ -30,6 +31,9 @@ app.engine('jsx', require('express-react-views').createEngine());
 app.use(express.urlencoded({extended:true}));
 // true allows for nesting
 
+//use methodOverride.  We'll be adding a query parameter to our delete form named _method
+app.use(methodOverride("_method"))
+
 
 //INDEX
 app.get('/africa', (req, res)=>{
@@ -56,12 +60,24 @@ app.get('/africa/new', (req, res)=>{
 
 
 //UPDATE
+app.put("/fruit/:id", (req, res)=>{
+    if(req.body.recipeCompleted ==="on"){
+        req.body.recipeCompleted= true;
+    } else{
+        req.body.recipeCompleted= false
+    }
 
+    Recipe.findByIdAndUpdate(req.params.id,
+        req.boddy,
+        {new: true},
+        (err, updateModel)=>{
+            res.redirect("/africa")
+        })
+})
 
 
 
 //CREATE
-
 app.post('/africa/', (req, res)=>{
     if(req.body.recipeCompleted ==='on'){
         req.body.recipeCompleted=true;

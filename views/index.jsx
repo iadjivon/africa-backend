@@ -4,8 +4,9 @@ class Index extends React.Component {
     render(){
         return (
             <div> 
-    <a href={`/africa/new`}><button> New Recipe </button> </a> 
+    {/* <a href={`/africa/new`}><button> New Recipe </button> </a>  */}
         <div>
+            <h1> this is the index page</h1>
             <ul>
                 {
                     this.props.recipes.map((recipe, i) => {
@@ -21,7 +22,7 @@ class Index extends React.Component {
 
                       <p> { recipe.instructions } </p>
 
-                      <h5>{recipe.sercingSize}</h5>
+                      <h5>{recipe.servingSize}</h5>
                         
                         
                         { recipe.recipeCompleted ? ` We can't wait for you to try this recipe!` : ` We hope you enjoyed cooking ${recipe.name}` }
@@ -29,7 +30,7 @@ class Index extends React.Component {
 
 
                         <br></br>
-                        <a href={`/africa/${recipe._id}/edit`}> Edit This Recipe</a>
+                        {/* <a href={`/africa/${recipe._id}/edit`}> Edit This Recipe</a> */}
 
                         <form action={`/africa/${recipe._id}?_method=DELETE`} method="POST">
                             <input type= "submit" value="DELETE"/>
