@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3000;
 
 //declaring the mongoURI variable
-const mongoURI =  "mongodb+srv://iadjivon:7L5BjoiBTM9gfCDI@cluster0.pulvm.mongodb.net/AfricaApp?retryWrites=true&w=majority";
+const mongoURI = "mongodb+srv://iadjivon:7L5BjoiBTM9gfCDI@cluster0.pulvm.mongodb.net/AfricaRecipes?retryWrites=true&w=majority"
 
 //Connect to Mongo
 mongoose.connect(mongoURI, {
@@ -17,7 +17,7 @@ mongoose.connection.once("open",()=>{
     console.log("connected to mongo");
 });
 
-const Recipe = require("./models/recipe")
+const Recipe = require("./models/recipes")
 
 
 app.set('view engine', 'jsx');
@@ -33,7 +33,12 @@ app.use(express.urlencoded({extended:true}));
 
 //INDEX
 app.get('/africa', (req, res)=>{
-    res.send("new")
+    Recipe.find({}, (error, allRecipes)=>{
+        res.render('index', {
+            recipes: allRecipes
+        })
+    })
+    
 })
 
 
@@ -65,9 +70,10 @@ app.post('/africa/', (req, res)=>{
     }
 
     Recipe.create(req.body, (error, createdRecipe)=>{
-        res.send(createdRecipe)
+        // res.send(createdRecipe)
+        res.redirect("/africa")
     })
-    res.send(req.body);
+    // res.send(req.body);
 });
 
 

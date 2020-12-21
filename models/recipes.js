@@ -6,8 +6,9 @@ const ingredientList = new mongoose.Schema ({ any: [{}]})
 
 const recipeSchema = new mongoose.Schema({
     name:  { type: String, required: true },
-    cookTime:  { type: Number, required: true },
-    description:  { type: String, required: true },
+    cookTime:  { type: Number  },
+    description:  { type: String },
+    servingSize:  { type: Number },
     ingredients:  [ingredientList],
     instructions:  [instructionsList],
     recipeCompleted: Boolean

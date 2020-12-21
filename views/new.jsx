@@ -8,7 +8,9 @@ class New extends React.Component {
             <form action="/africa" method="POST">
                 Recipe Name: <input type="text" name="name" />
                 <br/>
-                Total Cook Time: <input type="number" name="time" />
+                Total Cook Time: <input type="number" name="cookTime" />
+                <br/>
+                Serving Size: <input type="number" name="servingSize" />
                 <br/>
                 Description: <input type="text" name="description" placeholder="give a brief description about the food" />
                 <br/>
