@@ -55,20 +55,24 @@ app.get('/africa/new', (req, res)=>{
 
 
 //DESTROY 
-
+app.delete("/africa/:id", (req, res)=>{
+    Recipe.findByIdAndRemove(req.params.id, (err, data)=>{
+        res.redirect("/africa")
+    })
+})
 
 
 
 //UPDATE
-app.put("/fruit/:id", (req, res)=>{
-    if(req.body.recipeCompleted ==="on"){
+app.put("/africa/:id", (req, res)=>{
+    if(req.body.recipeCompleted === "on"){
         req.body.recipeCompleted= true;
     } else{
         req.body.recipeCompleted= false
     }
 
     Recipe.findByIdAndUpdate(req.params.id,
-        req.boddy,
+        req.body,
         {new: true},
         (err, updateModel)=>{
             res.redirect("/africa")
@@ -94,7 +98,11 @@ app.post('/africa/', (req, res)=>{
 
 
 //EDIT
-
+app.get('/africa/:id/edit', (req, res)=>{
+    Recipe.findById(req.params.id, (err, foundRecipe)=>{
+        res.render('edit', {recipe: foundRecipe})
+    });
+})
 
 
 
