@@ -21,6 +21,10 @@ mongoose.connection.once("open",()=>{
 const Recipe = require("./models/recipes")
 
 
+//CORS
+const cors = require("cors");
+const corsOptions = require("./configs/cors.js");
+
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
@@ -34,99 +38,71 @@ app.use(express.urlencoded({extended:true}));
 //use methodOverride.  We'll be adding a query parameter to our delete form named _method
 app.use(methodOverride("_method"))
 
+app.use(cors())
+app.use(express.json())
 
+//////////////////////
 //INDEX
-app.get('/africa', (req, res)=>{
-    Recipe.find({}, (error, allRecipes)=>{
-        res.render('index', {
-            recipes: allRecipes
-        })
-    })
-    
+//////////////////////
+// app.get("/", (req, res) => {
+//     res.json({ hello: "Hello World!" });
+//   });
+
+app.get("/africa", async (req, res)=>{
+    res.json(await Recipe.find({}));
 })
 
 
 
-//NEW
-app.get('/africa/new', (req, res)=>{
-    res.render('new');
-}),
-
-
-
-//DESTROY 
-app.delete("/africa/:id", (req, res)=>{
-    Recipe.findByIdAndRemove(req.params.id, (err, data)=>{
-        res.redirect("/africa")
-    })
-})
-
-
-
-//UPDATE
-app.put("/africa/:id", (req, res)=>{
-    if(req.body.recipeCompleted === "on"){
-        req.body.recipeCompleted= true;
-    } else{
-        req.body.recipeCompleted= false
-    }
-
-    Recipe.findByIdAndUpdate(req.params.id,
-        req.body,
-        {new: true},
-        (err, updateModel)=>{
-            res.redirect("/africa")
-        })
-})
-
-
-
+//////////////////////
 //CREATE
-app.post('/africa/', (req, res)=>{
-    if(req.body.recipeCompleted ==='on'){
-        req.body.recipeCompleted=true;
-    }else{
-        req.body.recipeCompleted=false;
-    }
+//////////////////////
 
-    Recipe.create(req.body, (error, createdRecipe)=>{
-        // res.send(createdRecipe)
-        res.redirect("/africa")
-    })
-    // res.send(req.body);
-});
+app.post("/africa/", async (req, res) => {
+    res.json(await Recipe.create(req.body));
+  });
 
 
+//////////////////////
+//UPDATE
+//////////////////////
+app.put("/africa/:id", async (req, res) => {
+    res.json(await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true }));
+  });
+
+
+
+//////////////////////
+//NEW
+//////////////////////
+
+
+
+//////////////////////
+//DESTROY 
+//////////////////////
+
+app.delete("/africa/:id", async (req, res) => {
+    res.json(await Recipe.findByIdAndRemove(req.params.id));
+  });
+
+
+
+
+
+
+
+
+
+
+//////////////////////
 //EDIT
-app.get('/africa/:id/edit', (req, res)=>{
-    Recipe.findById(req.params.id, (err, foundRecipe)=>{
-        res.render('edit', {recipe: foundRecipe})
-    });
-})
+//////////////////////
+
 
 
 
 //SHOW
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
