@@ -48,7 +48,7 @@ app.use(express.json())
 //     res.json({ hello: "Hello World!" });
 //   });
 
-app.get("/africa", async (req, res)=>{
+app.get("/recipe", async (req, res)=>{
     res.json(await Recipe.find({}));
 })
 
@@ -58,7 +58,7 @@ app.get("/africa", async (req, res)=>{
 //CREATE
 //////////////////////
 
-app.post("/africa/", async (req, res) => {
+app.post("/recipe/", async (req, res) => {
     res.json(await Recipe.create(req.body));
   });
 
@@ -66,7 +66,7 @@ app.post("/africa/", async (req, res) => {
 //////////////////////
 //UPDATE
 //////////////////////
-app.put("/africa/:id", async (req, res) => {
+app.put("/recipe/:id", async (req, res) => {
     res.json(await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true }));
   });
 
@@ -82,7 +82,7 @@ app.put("/africa/:id", async (req, res) => {
 //DESTROY 
 //////////////////////
 
-app.delete("/africa/:id", async (req, res) => {
+app.delete("/recipe/:id", async (req, res) => {
     res.json(await Recipe.findByIdAndRemove(req.params.id));
   });
 
