@@ -83,7 +83,7 @@ app.put("/recipe/:id", async (req, res) => {
 //////////////////////
 
 app.delete("/recipe/:id", async (req, res) => {
-    res.json(await Recipe.findByIdAndRemove(req.params.id));
+    res.json(await Recipe.find(req.params.id));
   });
 
 
@@ -103,9 +103,9 @@ app.delete("/recipe/:id", async (req, res) => {
 
 
 //SHOW
-
-
-
+app.get("/recipe/:id", async (req, res)=>{
+  res.json(await Recipe.findById([{}]));
+})
 
 
 
